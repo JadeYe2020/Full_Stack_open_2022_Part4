@@ -4,24 +4,25 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const mongoose = require('mongoose')
+const Blog = require('./models/blog')
 const middleware = require('./utils/middleware')
 
-const blogSchema = new mongoose.Schema({
-  title: String,
-  author: String,
-  url: String,
-  likes: Number
-})
+// const blogSchema = new mongoose.Schema({
+//   title: String,
+//   author: String,
+//   url: String,
+//   likes: Number
+// })
 
-blogSchema.set('toJSON', {
-  transform: (document, returnedObj) => {
-    returnedObj.id = returnedObj._id.toString()
-    delete returnedObj._id
-    delete returnedObj.__v
-  }
-})
+// blogSchema.set('toJSON', {
+//   transform: (document, returnedObj) => {
+//     returnedObj.id = returnedObj._id.toString()
+//     delete returnedObj._id
+//     delete returnedObj.__v
+//   }
+// })
 
-const Blog = mongoose.model('Blog', blogSchema)
+// const Blog = mongoose.model('Blog', blogSchema)
 
 const mongoUrl = process.env.MONGODB_URI
 mongoose.connect(mongoUrl)
