@@ -4,6 +4,7 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const mongoose = require('mongoose')
+const middleware = require('./utils/middleware')
 
 const blogSchema = new mongoose.Schema({
   title: String,
@@ -33,6 +34,8 @@ mongoose.connect(mongoUrl)
 
 app.use(cors())
 app.use(express.json())
+
+app.use(middleware.requestLogger)
 
 app.get('/', (request, response) => {
   response.send('<h1>Bloglist Backend</h1>')
