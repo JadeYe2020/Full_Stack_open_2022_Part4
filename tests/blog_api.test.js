@@ -65,6 +65,25 @@ test('if the likes property is missing from the request the value is 0', async (
   expect(blogsAdded.likes).toEqual(0)
 })
 
+test('the title and url properties are missing cannot be added', async () => {
+  const newBlogNoTitle = {
+    author: 'testing',
+    url: 'http://testing.test',
+    likes: 6
+  }
+  const newBlogNoUrl = {
+    title: 'Test creating a new blog but no url',
+    author: 'testing2',
+    likes: 5
+  }
+
+  await api.post('/api/blogs', newBlogNoTitle)
+    .expect(400)
+  
+  await api.post('/api/blogs', newBlogNoUrl)
+    .expect(400)
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
