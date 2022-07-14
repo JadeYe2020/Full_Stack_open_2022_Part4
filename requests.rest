@@ -7,3 +7,11 @@ Content-Type: application/json
   "url": "http://somelink.com",
   "likes": 5
 }
+
+###
+PUT http://localhost:3003/api/blogs/62cf005d406e4f2d6f270b16
+Content-Type: application/json
+
+{
+  "likes": 6
+}

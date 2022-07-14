@@ -84,6 +84,35 @@ test('the title and url properties are missing cannot be added', async () => {
     .expect(400)
 })
 
+test('delete a blog post', async () => {
+  const blogsAtStart = await helper.blogsInDb()
+  const blogToRemove = blogsAtStart[0]
+
+  await api.delete(`/api/blogs/${blogToRemove.id}`)
+    .expect(204)
+  
+  const blogsAtEnd = await helper.blogsInDb()
+  expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length - 1)
+  
+  const titles = blogsAtEnd.map(blog => blog.title)
+  expect(titles).not.toContain(blogToRemove.title)
+})
+
+test('update a post with one more like', async () => {
+  const blogsAtStart = await helper.blogsInDb()
+  const blogToUpdate = blogsAtStart[0]
+  const blogWithNewLikes = {
+    likes: blogToUpdate.likes + 1
+  }
+  
+  await api.put(`/api/blogs/${blogToUpdate.id}`, blogWithNewLikes)
+    .send(blogWithNewLikes)
+  const blogsAtEnd = await helper.blogsInDb()
+  console.log(blogsAtEnd)
+  const blogUpdated = blogsAtEnd.find(b => b.id === blogToUpdate.id)
+  expect(blogUpdated.likes).toEqual(blogToUpdate.likes + 1)
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
