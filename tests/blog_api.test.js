@@ -47,6 +47,24 @@ test('a new blog post can be added', async () => {
   expect(titles).toContain(newBlog.title)
 })
 
+test('if the likes property is missing from the request the value is 0', async () => {
+  const newBlog = {
+    title: 'Test creating a new blog with no likes prop',
+    author: 'testing',
+    url: 'http://testing.test'
+  }
+
+  await api.post('/api/blogs', newBlog)
+    .send(newBlog)
+    .expect(201)
+  
+  const blogsAtEnd = await helper.blogsInDb()
+  expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length + 1)
+
+  const blogsAdded = blogsAtEnd[blogsAtEnd.length -1]
+  expect(blogsAdded.likes).toEqual(0)
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
