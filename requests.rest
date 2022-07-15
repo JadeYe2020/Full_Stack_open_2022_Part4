@@ -2,10 +2,10 @@ POST http://localhost:3003/api/blogs
 Content-Type: application/json
 
 {
-  "title": "Third blog",
-  "author": "Jane Doe",
+  "title": "Things I don't know as of 2008",
+  "author": "Dan Abremov",
   "url": "http://somelink.com",
-  "likes": 5
+  "likes": 1
 }
 
 ###
