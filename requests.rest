@@ -50,16 +50,16 @@ Content-Type: application/json
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI2MmQxYWYxMjJjZjVmN2QyOTUzMDczMWMiLCJpYXQiOjE2NTc5MjIxNjR9.7CossgbsUSDLLIEJak9kpYFMdWeDZBHIO6CK97oj2VY
 
 {
-  "title": "How to refactor authenticate",
+  "title": "2How to refactor authenticate using userExtractor",
   "author": "John McDonald",
   "url": "http://somelink.com",
-  "likes": 2
+  "likes": 5
 }
 
 ###
-DELETE http://localhost:3003/api/blogs/62d214feecbcc176e1312363
+DELETE http://localhost:3003/api/blogs/62d597fe9b3a0541e20c1b42
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImhlbGxhcyIsImlkIjoiNjJkMWFlZjAyY2Y1ZjdkMjk1MzA3MzFhIiwiaWF0IjoxNjU4MTYzNjI5LCJleHAiOjE2NTgxNjcyMjl9.3aCtYzk_4FW6IYDmJsfMavbKhQ3c7XbdyCF1P8ex2UE
 
 ###
-DELETE http://localhost:3003/api/blogs/62d214feecbcc176e1312363
+DELETE http://localhost:3003/api/blogs/62d597fe9b3a0541e20c1b42
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI2MmQxYWYxMjJjZjVmN2QyOTUzMDczMWMiLCJpYXQiOjE2NTc5MjIxNjR9.7CossgbsUSDLLIEJak9kpYFMdWeDZBHIO6CK97oj2VY

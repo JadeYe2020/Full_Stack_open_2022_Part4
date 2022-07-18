@@ -1,8 +1,6 @@
 require('dotenv').config()
 const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
-const User = require('../models/user')
-const jwt = require('jsonwebtoken')
 
 blogsRouter.get('/', async (request, response) => {
   const blogs = await Blog
@@ -25,13 +23,11 @@ blogsRouter.get('/:id', (request, response, next) => {
 
 blogsRouter.post('/', async (request, response) => {
   const body = request.body
+  const user = request.user
   
-  const decodedToken = jwt.verify(request.token, process.env.SECRET)
-
-  if (!decodedToken.id) {
+  if (!user) {
     return response.status(401).json({ error: 'token missing or invalid' })
   }
-  const user = await User.findById(decodedToken.id)
 
   const blog = new Blog({
     title: body.title,
@@ -49,18 +45,12 @@ blogsRouter.post('/', async (request, response) => {
 })
 
 blogsRouter.delete('/:id', async (request, response) => {
-  // const body = request.body
-  // console.log('request body', body)
-
-  const decodedToken = jwt.verify(request.token, process.env.SECRET)
-  if (!decodedToken) {
+  const currUser = request.user
+  if (!currUser) {
     return response.status(401).json({ error: 'token missing or invalid' })
   }
-  const currUser = await User.findById(decodedToken.id)
 
   const blog = await Blog.findById(request.params.id)
-
-  console.log('blog to delete', blog)
 
   if (blog.user.toString() === currUser._id.toString()) {
     await Blog.findByIdAndRemove(request.params.id)

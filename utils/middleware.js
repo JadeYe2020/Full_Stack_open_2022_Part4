@@ -1,3 +1,6 @@
+require('dotenv').config()
+const jwt = require('jsonwebtoken')
+const User = require('../models/user')
 const logger = require('./logger')
 
 const requestLogger = (request, response, next) => {
@@ -40,9 +43,28 @@ const tokenExtractor = (request, response, next) => {
   next()
 }
 
+const userExtractor = async (request, response, next) => {
+  const authorization = request.get('authorization')
+
+  if (authorization && authorization.toLowerCase().startsWith('bearer')) {
+    const token = authorization.substring(7)
+    const decodedToken = jwt.verify(token, process.env.SECRET)
+    if (!decodedToken.id) {
+      return request.user = null
+    } else {
+      request.user = await User.findById(decodedToken.id)
+    }
+  } else {
+    request.user = null
+  }
+
+  next()
+}
+
 module.exports = { 
   requestLogger, 
   unknownEndpoint,
   errorHandler,
-  tokenExtractor 
+  tokenExtractor,
+  userExtractor
 }
